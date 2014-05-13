@@ -28,49 +28,39 @@ public class FileIOPass {
         String color;
         boolean Capture = false;
 
-        p1c = color(piece1);
-        p2c = color(piece2);
+        p1c = color(piece1.substring(0));
+        p2c = color(piece2.substring(0));
             
         
         
         
-        piece1 = (piece(piece1));
-        piece2 = (piece(piece2));
+        piece1 = (piece(piece1.substring(1)));
+        piece2 = (piece(piece2.substring(1)));
         if(!command.contains("*")) {
             System.out.println("Command " + command + " = " + p1c +  piece1 + " on " + command.substring(2, 4) + " Moves To " + command.substring(6,command.length()));
         } else {
-            System.out.println("Command " + command + " = " + piece1 + " on " + command.substring(2, 4) + " Moves To " + command.substring(6,command.length() - 1) + " And Takes The " + p2c + piece2 + " At " + piece2.substring(2, 4));
+            System.out.println("Command " + command + " = " + p1c + piece1 + " on " + command.substring(2, 4) + " Moves To " + command.substring(6,command.length() - 1) + " And Takes The " + p2c + piece2 + " At " + command.substring(6, command.length() - 1));
         }
     }
     
     
     public static String piece(String pieceCode) {
-        String piece = "";
-        
-        if(pieceCode.startsWith("K")) {
-            piece = "King";
-        } else if(pieceCode.startsWith("Q")) {
-            piece = "Queen";
-        } else if(pieceCode.startsWith("B")) {
-            piece = "Bishop";
-        } else if(pieceCode.startsWith("N")) {
-            piece = "Knight";
-        } else if(pieceCode.startsWith("R")) {
-            piece = "Rook";
-        } else if(pieceCode.startsWith("P")) {
-            piece = "Pawn";
-        } else {
-            piece = "Invalid piece";    
+        switch(pieceCode) {
+                case "K" : return "King";
+                case "Q" : return "Queen";
+                case "B" : return "Bishop";
+                case "N" : return "Knight";
+                case "R" : return "Rook";
+                case "P" : return "Pawn";
+                default : return "Invalid piece";
         }
-        return piece;
     }
     
     public static String color(String command) {
-     if(Character.toString(command.charAt(1)).equalsIgnoreCase("L")) {
-            return "Light ";
-        } else if(Character.toString(command.charAt(1)).equalsIgnoreCase("D")) {
-            return "Dark ";
-        }   
-     return null;
+        switch(command) {
+            case "L" : return "Light";
+            case "D" : return "Dark";
+            default : return "Neither Dark or Light";
+        }
     }
 }
