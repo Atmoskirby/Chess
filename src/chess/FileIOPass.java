@@ -22,17 +22,14 @@ public class FileIOPass {
         command = command.replaceAll(" ","");
         command = command.toUpperCase();
         String piece1 = command.substring(0,4);
-        String p1c = "";
+        String p1c;
         String piece2 = command.substring(4, command.length());
-        String p2c = "";
+        String p2c;
         String color;
         boolean Capture = false;
 
         p1c = color(piece1.substring(0));
         p2c = color(piece2.substring(0));
-            
-        
-        
         
         piece1 = (piece(piece1.substring(1)));
         piece2 = (piece(piece2.substring(1)));
