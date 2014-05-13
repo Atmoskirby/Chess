@@ -28,11 +28,12 @@ public class FileIOPass {
         String color;
         boolean Capture = false;
 
-        p1c = color(piece1.substring(0));
-        p2c = color(piece2.substring(0));
+        p1c = color(Character.toString(piece1.charAt(1)));
+        p2c = color(Character.toString(piece2.charAt(1)));
         
-        piece1 = (piece(piece1.substring(1)));
-        piece2 = (piece(piece2.substring(1)));
+        piece1 = (piece(Character.toString(piece1.charAt(0))));
+        piece2 = (piece(Character.toString(piece2.charAt(0))));
+        
         if(!command.contains("*")) {
             System.out.println("Command " + command + " = " + p1c +  piece1 + " on " + command.substring(2, 4) + " Moves To " + command.substring(6,command.length()));
         } else {
@@ -55,9 +56,9 @@ public class FileIOPass {
     
     public static String color(String command) {
         switch(command) {
-            case "L" : return "Light";
-            case "D" : return "Dark";
-            default : return "Neither Dark or Light";
+            case "L" : return "Light ";
+            case "D" : return "Dark ";
+            default : return "Neither Dark or Light ";
         }
     }
 }
