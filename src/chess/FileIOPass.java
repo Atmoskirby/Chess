@@ -1,43 +1,34 @@
 package chess;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.util.regex.*;
 
 public class FileIOPass {
     
     public static void main(String[] args) throws FileNotFoundException, IOException {
-        String fileLocation = args[0];
+        String fileLocation = "C://tmp/newfile.txt";
         File file = new File(fileLocation);
         FileReader reader = new FileReader(file);
         BufferedReader br = new BufferedReader(reader);
-        
         while(br.ready()) {
             Decipher(br.readLine());
         }
     }
     
     public static void Decipher(String command) {
-        command = command.replaceAll(" ","");
         command = command.toUpperCase();
-        String piece1 = command.substring(0,4);
-        String p1c;
-        String piece2 = command.substring(4, command.length());
-        String p2c;
-        String color;
-        boolean Capture = false;
+        String piece[] = command.split(" ").clone();
+        String p1c[] = new String[2];
 
-        p1c = color(Character.toString(piece1.charAt(1)));
-        p2c = color(Character.toString(piece2.charAt(1)));
+        p1c[0] = color(Character.toString(piece[0].charAt(1)));
+        p1c[1] = color(Character.toString(piece[1].charAt(1)));
         
-        piece1 = (piece(Character.toString(piece1.charAt(0))));
-        piece2 = (piece(Character.toString(piece2.charAt(0))));
+        piece[0] = (piece(Character.toString(piece[0].charAt(0))));
+        piece[1] = (piece(Character.toString(piece[1].charAt(0))));
         
-        if(!command.contains("*")) {
-            System.out.println("Command " + command + " = " + p1c +  piece1 + " on " + command.substring(2, 4) + " Moves To " + command.substring(6,command.length()));
+        if(!command.endsWith("*")) {
+            System.out.println("Command " + command + " = " + p1c[0] +  piece[0] + " on " + piece[0].substring(2, 4) + " Moves To " + command.substring(7,command.length()));
         } else {
-            System.out.println("Command " + command + " = " + p1c + piece1 + " on " + command.substring(2, 4) + " Moves To " + command.substring(6,command.length() - 1) + " And Takes The " + p2c + piece2 + " At " + command.substring(6, command.length() - 1));
+            System.out.println("Command " + command + " = " + p1c[0] + piece[0] + " on " + piece[0].substring(2, 4) + " Moves To " + command.substring(7,command.length() - 1) + " And Takes The " + p1c[1] + piece[1] + " At " + command.substring(command.length() - 3, command.length() - 1));
         }
     }
     
