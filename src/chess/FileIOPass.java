@@ -16,14 +16,20 @@ public class FileIOPass {
     
     public static void Decipher(String command) {
         command = command.toUpperCase();
+        Pattern com = Pattern.compile("[KQBNRP][LD][A-H][1-8]");
+        
+       
         String piece[] = command.split(" ").clone();
+        Matcher matcher = com.matcher(piece[0]);
         String p1c[] = new String[2];
-
+ 
         p1c[0] = color(Character.toString(piece[0].charAt(1)));
         p1c[1] = color(Character.toString(piece[1].charAt(1)));
         
         piece[0] = (piece(Character.toString(piece[0].charAt(0))));
         piece[1] = (piece(Character.toString(piece[1].charAt(0))));
+        
+        System.out.println();
         
         if(!command.endsWith("*")) {
             System.out.println("Command " + command + " = " + p1c[0] +  piece[0] + " on " + piece[0].substring(2, 4) + " Moves To " + command.substring(7,command.length()));
