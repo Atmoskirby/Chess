@@ -11,7 +11,7 @@ public class FileIOPass {
     static Matcher matcher2;
     static Map map = new HashMap();
     public static void main(String[] args) throws IOException {
-        String fileLocation = args[0];
+        String fileLocation = "C://tmp/newfile.txt";
         File file = new File(fileLocation);
         FileReader reader = new FileReader(file);
         BufferedReader br = new BufferedReader(reader);
@@ -30,15 +30,11 @@ public class FileIOPass {
         command = command.toUpperCase();
         
         String piece[] = command.split(" ");
-        piece[1] = piece[1].replaceAll(" ", "");
-        
         matcher = pattern1.matcher(piece[0]);
         matcher2 = pattern2.matcher(piece[1]);
+               
+        String p1c[] = new String[2];
         
-        
-        
-        
-        String p1c[] = new String[piece.length];
         if(matcher.matches()&&matcher2.matches()) {
             matcher.matches();
             matcher2.matches();
