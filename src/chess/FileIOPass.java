@@ -29,7 +29,14 @@ public class FileIOPass {
     public static void Decipher(String command) {
         command = command.toUpperCase();
         
-        String piece[] = command.split(" ");
+        String piece[] = new String[command.length()/4];
+        for(int i = 0;i < command.length()/4;i++) {
+            piece[i] = "";
+            for(int o = 0; o < 8;o = o + 4) {
+                 piece[i] = command.substring(o, o + 4);
+            }
+            System.out.println(piece[i]);
+        }
         matcher = pattern1.matcher(piece[0]);
         matcher2 = pattern2.matcher(piece[1]);
                
