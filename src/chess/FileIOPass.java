@@ -14,7 +14,7 @@ public class FileIOPass {
 
     public static void main(String[] args) throws IOException {
         
-        String fileLocation = "C://tmp/newfile.txt";
+        String fileLocation = args[0];
         File file = new File(fileLocation);
         FileReader reader = new FileReader(file);
         BufferedReader br = new BufferedReader(reader);
@@ -36,6 +36,7 @@ public class FileIOPass {
 
         String piece[] = new String[command.length() / 4];
         String pieceColor[] = new String[2];
+        
         piece[0] = command.substring(0, 4);
         piece[1] = command.substring(4, 8);
 
@@ -57,13 +58,16 @@ public class FileIOPass {
             
             piece[2] = command.substring(8, 12);
             piece[3] = command.substring(12, 16);
+            
             Matcher piece3Match = pattern.matcher(piece[2]);
             Matcher piece4Match = pattern.matcher(piece[3]);
             
             if (piece3Match.matches() && piece4Match.matches()) {
+                
                 piece[2] = (piece(piece3Match.group().charAt(0)));
                 pieceColor[1] = color(piece3Match.group().charAt(1));
                 piece[3] = piece(piece4Match.group().charAt(0));
+                
                 System.out.println("Command " + command + " = " + pieceColor[0] + piece[0] + " on " + piece1Match.group().substring(2, 4) + " Moves To " + piece2Match.group().substring(2, 4) + " And the " + pieceColor[1] + piece[2] + " On " + piece3Match.group().substring(2, 4) + " Moves to " + piece4Match.group().substring(2, 4));
             } else {
                 System.out.println("One or more of the pieces does not match for command : " + command);
@@ -79,8 +83,8 @@ public class FileIOPass {
         return map.get(pieceCode).toString();
     }
 
-    public static String color(char command) {
-        switch (command) {
+    public static String color(char color) {
+        switch (color) {
             case 'L':
                 return "Light ";
             case 'D':
