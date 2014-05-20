@@ -1,97 +1,91 @@
 package chess;
+
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.*;
 
 public class FileIOPass {
-    static Pattern pattern1 = Pattern.compile("[KQBNRP][L|D][A-H][1-8]");
-    static Pattern pattern2 = Pattern.compile("[KQBNRP][L|D][A-H][1-8]+\\*?");
-    static Matcher matcher;
-    static Matcher matcher2;
+
+    static Pattern pattern = Pattern.compile("[KQBNRP][L|D][A-H][1-8]");
+    static Matcher piece1Match;
+    static Matcher piece2Match;
     static Map map = new HashMap();
+
     public static void main(String[] args) throws IOException {
-        String fileLocation = "C://tmp/newfile.txt";
+        
+        String fileLocation = args[0];
         File file = new File(fileLocation);
         FileReader reader = new FileReader(file);
         BufferedReader br = new BufferedReader(reader);
+        
         map.put('K', "King");
         map.put('Q', "Queen");
         map.put('B', "Bishop");
         map.put('N', "Knight");
         map.put('R', "Rook");
         map.put('P', "Pawn");
-        while(br.ready()) {
+        
+        while (br.ready()) {
             Decipher(br.readLine());
         }
     }
-    
+
     public static void Decipher(String command) {
         command = command.toUpperCase();
-        
-        String piece[] = new String[command.length()/4];
-        for(int i = 0;i < command.length()/4;i++) {
-            piece[i] = "";
-            for(int o = 0; o < 8;o = o + 4) {
-                 piece[i] = command.substring(o, o + 4);
-            }
-            System.out.println(piece[i]);
-        }
-        matcher = pattern1.matcher(piece[0]);
-        matcher2 = pattern2.matcher(piece[1]);
-               
-        String p1c[] = new String[2];
-        
-        if(matcher.matches()&&matcher2.matches()) {
-            matcher.matches();
-            matcher2.matches();
-            p1c[0] = color(matcher.group().charAt(1));
-            p1c[1] = color(matcher2.group().charAt(1));
+
+        String piece[] = new String[command.length() / 4];
+        String pieceColor[] = new String[command.length() / 4];
+        piece[0] = command.substring(0, 4);
+        piece[1] = command.substring(4, 8);
+
+        piece1Match = pattern.matcher(piece[0]);
+        piece2Match = pattern.matcher(piece[1]);
+
+
+
+        if (piece1Match.matches() && piece2Match.matches()) {
+            pieceColor[0] = color(piece1Match.group().charAt(1));
+            pieceColor[1] = color(piece2Match.group().charAt(1));
+            piece[0] = (piece(piece1Match.group().charAt(0)));
+            piece[1] = (piece(piece2Match.group().charAt(0)));
         } else {
-            System.out.println("One or more piece color did not match");
+            System.out.println("One or more of the pieces does not match for command : " + command);
         }
-        if(matcher.matches()&&matcher2.matches()) {
-            matcher.matches();
-            matcher2.matches();
-            piece[0] = (piece(matcher.group().charAt(0)));
-            piece[1] = (piece(matcher2.group().charAt(0)));
-        } else {
-            System.out.println("One or more of the pieces does not match");
-        }
-        
-        
-        if(piece.length == 4) {
-            Matcher matcher3 = pattern1.matcher(piece[2]);
-            Matcher matcher4 = pattern1.matcher(piece[3]);
-            if(matcher3.matches()) {
-                matcher3.matches();
-                piece[2] = (piece(matcher3.group().charAt(0)));
-                p1c[2] = color(matcher3.group().charAt(1));
+
+        if (piece.length == 4) {
+            piece[2] = command.substring(8, 12);
+            piece[3] = command.substring(12, 16);
+            Matcher piece3Match = pattern.matcher(piece[2]);
+            Matcher piece4Match = pattern.matcher(piece[3]);
+            if (piece3Match.matches() && piece4Match.matches()) {
+                piece[2] = (piece(piece3Match.group().charAt(0)));
+                pieceColor[2] = color(piece3Match.group().charAt(1));
+                piece[3] = piece(piece4Match.group().charAt(0));
+                pieceColor[3] = color(piece4Match.group().charAt(1));
+                System.out.println("Command " + command + " = " + pieceColor[0] + piece[0] + " on " + piece1Match.group().substring(2, 4) + " Moves To " + piece2Match.group().substring(2, 4) + " And the " + pieceColor[2] + piece[2] + " On " + piece3Match.group().substring(2, 4) + " Moves to " + piece4Match.group().substring(2, 4));
+            } else {
+                System.out.println("One or more of the pieces does not match for command : " + command);
             }
-            if(matcher4.matches()) {
-                matcher4.matches();
-                piece[3] = piece(matcher4.group().charAt(0));
-                p1c[3] = color(matcher4.group().charAt(1));
-            }
-            
-            System.out.println("Command " + command + " = " + p1c[0] +  piece[0] + " on " + command.substring(2, 4) + " Moves To " + command.substring(7,9) + " And the " + p1c[2] + piece[2] + " On " + matcher3.group().substring(2, 4) + " Moves to " + matcher4.group().substring(2, 4));
-        } else if(!command.endsWith("*")) {
-            System.out.println("Command " + command + " = " + p1c[0] +  piece[0] + " on " + command.substring(2, 4) + " Moves To " + command.substring(7,command.length()));
+        } else if (command.contains("*")) {
+            System.out.println("Command " + command + " = " + pieceColor[0] + piece[0] + " on " + piece1Match.group().substring(2, 4) + " Moves To " + piece2Match.group().substring(2, 4) + " And Takes The " + pieceColor[1] + piece[1] + " At " + piece2Match.group().substring(2, 4));
         } else {
-            System.out.println("Command " + command + " = " + p1c[0] + piece[0] + " on " + command.substring(2, 4) + " Moves To " + command.substring(7,command.length() - 1) + " And Takes The " + p1c[1] + piece[1] + " At " + command.substring(command.length() - 3, command.length() - 1));
+            System.out.println("Command " + command + " = " + pieceColor[0] + piece[0] + " on " + piece1Match.group().substring(2, 4) + " Moves To " + piece2Match.group().substring(2, 4));
         }
     }
-    
-    
+
     public static String piece(char pieceCode) {
         return map.get(pieceCode).toString();
     }
-    
+
     public static String color(char command) {
-        switch(command) {
-            case 'L' : return "Light ";
-            case 'D' : return "Dark ";
-            default : return "Neither Dark or Light ";
+        switch (command) {
+            case 'L':
+                return "Light ";
+            case 'D':
+                return "Dark ";
+            default:
+                return " Invalid Color Code ";
         }
     }
 }
