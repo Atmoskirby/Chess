@@ -8,8 +8,6 @@ import java.util.regex.*;
 public class FileIOPass {
 
     static Pattern pattern = Pattern.compile("[KQBNRP][L|D][A-H][1-8]");
-    static Matcher piece1Match;
-    static Matcher piece2Match;
     static Map map = new HashMap();
 
     public static void main(String[] args) throws IOException {
@@ -40,8 +38,8 @@ public class FileIOPass {
         piece[0] = command.substring(0, 4);
         piece[1] = command.substring(4, 8);
 
-        piece1Match = pattern.matcher(piece[0]);
-        piece2Match = pattern.matcher(piece[1]);
+        Matcher piece1Match = pattern.matcher(piece[0]);
+        Matcher piece2Match = pattern.matcher(piece[1]);
 
 
 
