@@ -7,7 +7,7 @@ import java.util.regex.*;
 
 public class FileIOPass {
 
-    static Pattern pattern = Pattern.compile("[KQBNRP][L|D][A-H][1-8]");
+    static Pattern pattern = Pattern.compile("[KQBNRP][LD][A-H][1-8]");
     static Map map = new HashMap();
 
     public static void main(String[] args) throws IOException {
